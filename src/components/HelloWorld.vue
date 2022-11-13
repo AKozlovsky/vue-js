@@ -1,11 +1,14 @@
-<script setup>
+<script>
 import { ref } from 'vue';
-
-defineProps({
-  msg: String,
-});
+import HelloWorld from './HelloWorld.vue';
 
 const count = ref(0);
+
+export default {
+  props: {
+    msg: String,
+  },
+};
 </script>
 
 <template>

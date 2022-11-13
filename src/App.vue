@@ -1,8 +1,32 @@
-<script setup>
+<script>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import HelloWorld from './components/HelloWorld.vue';
-import Router from './components/Router.vue';
+import Guide from './components/Guide.vue';
+
+const routes = {
+  '/': HelloWorld,
+  '/guide': Guide,
+};
+
+export default {
+  data() {
+    return {
+      currentPath: window.location.hash,
+      greeting: 'Vite + Vue',
+    };
+  },
+  computed: {
+    currentView() {
+      return routes[this.currentPath.slice(1) || '/'];
+    },
+  },
+  mounted() {
+    window.addEventListener('hashchange', () => {
+      this.currentPath = window.location.hash;
+    });
+  },
+};
 </script>
 
 <template>
@@ -14,8 +38,9 @@ import Router from './components/Router.vue';
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Vite + Vue" />
-  <Router />
+  <a href="#/">Home</a> |
+  <a href="#/guide">Guide</a>
+  <component :is="currentView" :msg="greeting" />
 </template>
 
 <style scoped>
